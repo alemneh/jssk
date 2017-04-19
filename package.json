@@ -18,8 +18,19 @@
   ],
   "author": "Alemneh S. Asefa <alemneh.asefa@outlook.com> (http://alemneh.com/)",
   "license": "MIT",
+  "bin": {
+    "jssk": "./src/index.js"
+  },
   "bugs": {
     "url": "https://github.com/alemneh/jssk/issues"
   },
-  "homepage": "https://github.com/alemneh/jssk#readme"
+  "homepage": "https://github.com/alemneh/jssk#readme",
+  "dependencies": {
+    "chalk": "1.1.3",
+    "co": "4.6.0",
+    "co-prompt": "1.0.0",
+    "commander": "2.9.0",
+    "progress": "2.0.0",
+    "superagent": "3.5.2"
+  }
 }
