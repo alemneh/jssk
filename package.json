@@ -1,0 +1,25 @@
+{
+  "name": "jssk",
+  "version": "1.0.0",
+  "description": "Command line tool to help manage job search for a recent coding bootcamp",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alemneh/jssk.git"
+  },
+  "keywords": [
+    "job",
+    "search",
+    "coding",
+    "bootcamp"
+  ],
+  "author": "Alemneh S. Asefa <alemneh.asefa@outlook.com> (http://alemneh.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alemneh/jssk/issues"
+  },
+  "homepage": "https://github.com/alemneh/jssk#readme"
+}
