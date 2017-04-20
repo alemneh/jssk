@@ -7,23 +7,10 @@ const request = require('superagent');
 const co = require('co');
 const prompt = require('co-prompt');
 const program = require('commander');
+const actions = require('../lib/actions');
 
 
-function saveFile(username, password) {
-  var state = {
-    arrary: []
-  };
-  state.username = username;
-  state.password = password;
-  state.arrary.push(username);
-  state.arrary.push(password);
-  var json = JSON.stringify(state);
-  fs.writeFile('state.json', json, 'utf8', (err) => {
-    if (err) throw err;
 
-    console.log('File saved!');
-  });
-}
 
 program
   .arguments('<file>')
@@ -33,7 +20,7 @@ program
     co(function *() {
       var username = yield prompt('username: ');
       var password = yield prompt.password('password: ');
-      saveFile(username);
+      actions.createState(username);
       var fileSize = fs.statSync(file).size;
       var fileStream = fs.createReadStream(file);
       var barOpts = {
