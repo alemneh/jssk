@@ -5,10 +5,16 @@
   "main": "src/index.js",
   "scripts": {
     "commit": "git-cz",
-    "check-coverage": "istanbul check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
+    "check-coverage": "nyc check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "test": "mocha test/index.test.js -w",
-    "test:single": "istanbul cover -x *.test.js _mocha -- -R spec test/index.test.js",
+    "watch:test": "npm t -- -w",
+    "test": "mocha src/index.test.js --compilers js:babel-register",
+    "cover": "nyc npm t",
+    "prebuild": "rimraf dist",
+    "build": "npm-run-all --parallel build:*",
+    "build:main": "babel --copy-files --out-dir dist --ignore *.test.js src",
+    "build:umd": "webpack --output-filename index.umd.js",
+    "build:umd.min": "webpack --output-filename index.umd.min.js -p",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -21,10 +27,14 @@
     "coding",
     "bootcamp"
   ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "author": "Alemneh S. Asefa <alemneh.asefa@outlook.com> (http://alemneh.com/)",
   "license": "MIT",
   "bin": {
-    "jssk": "./src/index.js"
+    "jssk": "dist/index.js"
   },
   "bugs": {
     "url": "https://github.com/alemneh/jssk/issues"
@@ -39,21 +49,37 @@
     "superagent": "3.5.2"
   },
   "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-loader": "6.4.1",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.24.1",
     "chai": "3.5.0",
     "codecov.io": "0.1.6",
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.0.0",
     "ghooks": "2.0.0",
     "istanbul": "0.4.5",
+    "json-loader": "0.5.4",
     "mocha": "3.2.0",
-    "semantic-release": "^6.3.2"
+    "npm-run-all": "4.0.2",
+    "nyc": "10.2.0",
+    "rimraf": "2.6.1",
+    "semantic-release": "^6.3.2",
+    "webpack": "2.4.1"
   },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run test:single && npm run check-coverage"
+      "pre-commit": "npm run cover && npm run check-coverage"
     }
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
   }
 }

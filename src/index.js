@@ -7,7 +7,7 @@ const request = require('superagent');
 const co = require('co');
 const prompt = require('co-prompt');
 const program = require('commander');
-const actions = require('../lib/actions');
+const actions = require('./lib/actions');
 
 
 
