@@ -1,5 +1,4 @@
 #!/usr/bin/env node --harmony
-'use strict';
 const fs = require('fs');
 const ProgressBar = require('progress');
 const chalk = require('chalk');

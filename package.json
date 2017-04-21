@@ -11,10 +11,7 @@
     "test": "mocha src/index.test.js --compilers js:babel-register",
     "cover": "nyc npm t",
     "prebuild": "rimraf dist",
-    "build": "npm-run-all --parallel build:*",
-    "build:main": "babel --copy-files --out-dir dist --ignore *.test.js src",
-    "build:umd": "webpack --output-filename index.umd.js",
-    "build:umd.min": "webpack --output-filename index.umd.min.js -p",
+    "build": "babel --copy-files --out-dir dist --ignore *.test.js src",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -62,7 +59,6 @@
     "istanbul": "0.4.5",
     "json-loader": "0.5.4",
     "mocha": "3.2.0",
-    "npm-run-all": "4.0.2",
     "nyc": "10.2.0",
     "rimraf": "2.6.1",
     "semantic-release": "^6.3.2",
