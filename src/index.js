@@ -1,12 +1,15 @@
 #!/usr/bin/env node --harmony
-const fs = require('fs');
-const ProgressBar = require('progress');
-const chalk = require('chalk');
-const request = require('superagent');
-const co = require('co');
-const prompt = require('co-prompt');
-const program = require('commander');
-const actions = require('./lib/actions');
+import fs from 'fs';
+import ProgressBar from 'progress';
+import chalk from 'chalk';
+import request from 'superagent';
+import co from 'co';
+import prompt from 'co-prompt';
+import program from 'commander';
+import actions from './lib/actions';
+import path from 'path';
+global.appRoot = path.resolve(__dirname);
+
 
 
 
