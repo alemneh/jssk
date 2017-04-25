@@ -9,6 +9,7 @@ const prompt = require('co-prompt');
 const program = require('commander');
 const actions = require('./lib/actions');
 const path = require('path');
+const pkg = require('../package.json');
 global.appRoot = path.resolve(__dirname);
 
 
@@ -16,54 +17,43 @@ global.appRoot = path.resolve(__dirname);
 
 
 program
-  .command('hello <name>')
-  .description('Say hello to <name>')
-  .action(function(name, command) {
-    console.log('hit');
-    console.log('Hello ' + name);
+  .version(pkg.version)
+  .command('start <file name>')
+  .description('List files and folders')
+  .option('-a, --all', 'List all files and folders')
+  .option('-l, --long','')
+  .action(function(file, options) {
+    co(function *() {
+      console.log('Applicant Info:');
+      var info = {};
+      info.fullName = yield prompt('full name: ');
+      info.email    = yield prompt('email: ');
+      info.phoneNum = yield prompt('phone: ');
+      info.filePath = file;
+      console.log(info);
+      var state = {
+        userInfo: {
+
+        }
+      };
+
+      state.userInfo = info;
+      var filePath = __dirname + '/data/' + info.filePath + '.json';
+
+      var json = JSON.stringify(state);
+      fs.mkdir(__dirname + '/data', function(err) {
+        if(err) throw err;
+        fs.writeFile(filePath, json, 'utf8', (err) => {
+          if (err) throw err;
+
+          console.log('File saved!');
+          process.exit(0);
+        });
+      });
+
+    });
   });
 
+program.parse(process.argv);
 
-
-
-  // co(function *() {
-  //   var username = yield prompt('username: ');
-  //   var password = yield prompt.password('password: ');
-  //   actions.createState(username);
-  //   var fileSize = fs.statSync(file).size;
-  //   var fileStream = fs.createReadStream(file);
-  //   var barOpts = {
-  //     width: 20,
-  //     total: fileSize,
-  //     clear: true
-  //   };
-  //   var bar = new ProgressBar(' uploading [:bar] :percent :etas', barOpts);
-  //
-  //   fileStream.on('data', function(chunk) {
-  //     bar.tick(chunk.length);
-  //   });
-  //
-  //   request
-  //     .post('https://api.bitbucket.org/2.0/snippets/')
-  //     .auth(username, password)
-  //     .attach('file', fileStream)
-  //     .set('Accept', 'application/json')
-  //     .end(function (err, res) {
-  //       if (!err && res.ok) {
-  //         var link = res.body.links.html.href;
-  //         console.log(chalk.bold.cyan('Snippet created: ') + link);
-  //         process.exit(0);
-  //       }
-  //
-  //       var errorMessage;
-  //       if (res && res.status == 401) {
-  //         errorMessage = 'Authenticate failed! Bad username/password?';
-  //       } else if (err) {
-  //         errorMessage = err;
-  //       } else {
-  //         errorMessage = res.text;
-  //       }
-  //       console.error(chalk.red(errorMessage));
-  //       process.exit(1);
-  //     });
-  // });
+if (program.args.length === 0) program.help();
