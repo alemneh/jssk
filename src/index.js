@@ -21,7 +21,9 @@ program
   .description('List files and folders')
   .option('-a, --all', 'List all files and folders')
   .option('-l, --long','')
-  .action(actions.createState);
+  .action(function(file, options) {
+    actions.createState(file, options);
+  });
 
 program.parse(process.argv);
 
